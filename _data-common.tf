@@ -2,10 +2,10 @@
 
 locals {
   region                    = var.aws_region
-  eks_package_bucket_name   = var.backend_s3_bucket_name
-  eks_package_bucket_key    = var.eks_s3_key
-  eks_package_bucket_region = local.region
-  eks_tfstat_path           = var.eks_tfstat_path
+  # eks_package_bucket_name   = var.backend_s3_bucket_name
+  # eks_package_bucket_key    = var.eks_s3_key
+  # eks_package_bucket_region = local.region
+  # eks_tfstat_path           = var.eks_tfstat_path
 }
 
 ############################# data : eks-c #######################################
