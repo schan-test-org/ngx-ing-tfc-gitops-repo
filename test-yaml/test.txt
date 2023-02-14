@@ -1,0 +1,49 @@
+# Deploy the echoserver resources
+1. Deploy all the echoserver resources (namespace, service, deployment)
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.0.0/docs/examples/echoservice/echoserver-namespace.yaml &&\
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.0.0/docs/examples/echoservice/echoserver-service.yaml &&\
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.0.0/docs/examples/echoservice/echoserver-deployment.yaml
+
+2.List all the resources to ensure they were created.
+kubectl get -n echoserver deploy,svc
+NAME             CLUSTER-IP   EXTERNAL-IP   PORT(S)        AGE
+svc/echoserver   10.3.31.76   <nodes>       80:31027/TCP   4d
+
+NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+deploy/echoserver   1         1         1            1           4d
+
+# Deploy ingress for echoserver
+1. Download the echoserver ingress manifest locally.
+wget https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.0.0/docs/examples/echoservice/echoserver-ingress.yaml
+
+Configure the subnets, either by add annotation to the ingress or add tags to subnets. This step is optional in lieu of auto-discovery.
+
+Edit the alb.ingress.kubernetes.io/subnets annotation to include at least two subnets.
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: echoserver
+  namespace: echoserver
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/subnets: subnet-0b700ed4faf97a4e1, subnet-049f0d322b44c7044  <- replace
+    alb.ingress.kubernetes.io/tags: Environment=poc,Team=dz-poc
+spec:
+  rules:
+    - host: echoserver.example.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: echoserver
+              servicePort: 80
+
+# sample 2
+
+
+
+
+
+curl --header "Host: echoserver.example.com" k8s-echoserv-echoserv-53c9f5b47a-796028246.ap-northeast-2.elb.amazonaws.com
