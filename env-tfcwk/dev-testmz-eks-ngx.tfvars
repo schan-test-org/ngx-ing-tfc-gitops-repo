@@ -13,7 +13,7 @@ default_tags = {
 # workspace setting
 ########################################
 tfc_org = "schan-test"
-tfc_wk = "dev-eks-tfc"
+tfc_wk = "1-dev-eks-tfc"
 
 ########################################
 # etc setting
@@ -27,7 +27,8 @@ eks_cluster_name       = "test-deveks"
 helm_release_name = "ingress-nginx"
 helm_chart_name   = "ingress-nginx"
 # helm_chart_version = "4.4.2"
-helm_chart_version  = "4.0.18"
+# helm_chart_version  = "4.0.18"
+helm_chart_version  = "4.5.2"
 helm_repository_url = "https://kubernetes.github.io/ingress-nginx"
 
 create_namespace = true
