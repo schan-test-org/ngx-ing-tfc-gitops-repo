@@ -19,7 +19,7 @@ tfc_wk = "1-dev-eks-tfc"
 # etc setting
 ########################################
 vpc_id                 = "vpc-0e8acf616f7d0dd34"
-eks_cluster_name       = "test-deveks"
+eks_cluster_name       = "deveks-test"
 
 ########################################
 # helm setting
